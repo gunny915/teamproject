@@ -12,6 +12,7 @@ const schema = new Schema({
   HP: {type: Number, default: 10},
   str: {type: Number, default: 5},
   def: {type: Number, default: 5},
+  exp: {type: Number, default: 0},
   x: {type: Number, default: 0},
   y: {type: Number, default: 0},
 });
