@@ -3,7 +3,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 
-const {constantManager, mapManager} = require('./datas/Manager');
+const {constantManager, mapManager, monsterManager, itemManager, eventManager} = require('./datas/Manager');
 const {Player} = require('./models/Player');
 
 const app = express();
@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
 mongoose.connect(
-    'mongodb+srv://tester:Z5knBqgfuOqzb2Pu@cluster0.ye4cg.mongodb.net/Game0?retryWrites=true&w=majority',
+    'mongodb+srv://a123456789:ghtjdaleka@cluster0.wgnlx.mongodb.net/mudgame?retryWrites=true&w=majority',
     {useNewUrlParser: true, useUnifiedTopology: true},
 );
 
