@@ -23,7 +23,7 @@
       [1, 1, 1, 0],
       [
         { "type": "item", "item": 1, "percent": 70 },
-        { "type": "battle", "enemy": 1, "percent": 30 }
+        { "type": "battle", "monster": 1, "percent": 30 }
       ]
     ],
 

@@ -48,6 +48,10 @@ class MonsterManager extends Manager {
       })
     })
   }
+
+  getMonster(id) {
+    return this.monsters[id-1];
+  }
 }
 
 class ItemManager extends Manager {
@@ -62,6 +66,10 @@ class ItemManager extends Manager {
       })
     })
   }
+
+  getItem(id) {
+    return this.items[id-1];
+  }
 }
 
 class EventManager extends Manager {
@@ -71,9 +79,13 @@ class EventManager extends Manager {
     datas.forEach((event) => {
       this.events.push({
         id : event['id'],
-        name : event['name']
+        description : event['description']
       })
     })
+  }
+
+  getEvent(id) {
+    return this.events[id];
   }
 }
 
