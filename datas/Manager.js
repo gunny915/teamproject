@@ -40,13 +40,14 @@ class MonsterManager extends Manager {
     this.monsters = [];
     datas.forEach((monster) => {
       this.monsters.push({
-        id : monster['id'],
-        name : monster['name'],
-        str : monster['str'],
-        def : monster['def'],
-        hp : monster['hp']
-      })
-    })
+        id: monster['id'],
+        name: monster['name'],
+        str: monster['str'],
+        def: monster['def'],
+        hp: monster['hp'],
+        exp: monster['exp'],
+      });
+    });
   }
 
   getMonster(id) {
@@ -60,11 +61,11 @@ class ItemManager extends Manager {
     this.items = [];
     datas.forEach((item) => {
       this.items.push({
-        id : item['id'],
-        name : item['name'],
-        def : item['def']
-      })
-    })
+        id: item['id'],
+        name: item['name'],
+        def: item['def'],
+      });
+    });
   }
 
   getItem(id) {
@@ -78,10 +79,10 @@ class EventManager extends Manager {
     this.events = [];
     datas.forEach((event) => {
       this.events.push({
-        id : event['id'],
-        description : event['description']
-      })
-    })
+        id: event['id'],
+        description: event['description'],
+      });
+    });
   }
 
   getEvent(id) {
@@ -90,23 +91,23 @@ class EventManager extends Manager {
 }
 
 const constantManager = new ConstantManager(
-    JSON.parse(fs.readFileSync(__dirname + '/constants.json'))
+    JSON.parse(fs.readFileSync(__dirname + '/constants.json')),
 );
 
 const mapManager = new MapManager(
-    JSON.parse(fs.readFileSync(__dirname + '/map.json'))
+    JSON.parse(fs.readFileSync(__dirname + '/map.json')),
 );
 
 const monsterManager = new MonsterManager(
-    JSON.parse(fs.readFileSync(__dirname + '/monsters.json'))
+    JSON.parse(fs.readFileSync(__dirname + '/monsters.json')),
 );
 
 const itemManager = new ItemManager(
-    JSON.parse(fs.readFileSync(__dirname + '/items.json'))
+    JSON.parse(fs.readFileSync(__dirname + '/items.json')),
 );
 
 const eventManager = new EventManager(
-    JSON.parse(fs.readFileSync(__dirname + '/events.json'))
+    JSON.parse(fs.readFileSync(__dirname + '/events.json')),
 );
 
 
@@ -115,5 +116,5 @@ module.exports = {
   mapManager,
   monsterManager,
   itemManager,
-  eventManager
+  eventManager,
 };
