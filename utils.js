@@ -60,6 +60,7 @@ const debugMonster = (player) => {
   const monsterAttack = Math.max(monster.str - player.def, 0);
   let battleCount = 0;
   let name = '';
+
   while (playerHP > 0 && monsterHP > 0) {
     battleCount += 1;
     name = monster.name;
