@@ -57,7 +57,7 @@ const debugMonster = (player) => {
   while (playerHP > 0 && monsterHP > 0) {
     battleCount += 1;
     if (battleCount === 10) {
-      eventTexts.push(`무의미한 싸움이다...`);
+      eventTexts.push('무의미한 싸움이다...');
       break;
     }
     monsterHP -= playerAttack;
@@ -67,7 +67,7 @@ const debugMonster = (player) => {
       eventTexts.push(`${monster.name}을 모두 해결하였다.`);
       if (player.incrementEXP(monster.exp)) {
         // TODO: 레벨업 시에, 문구 추가
-        eventTexts.push();
+        eventTexts.push('레벨 업! 더 나은 개발자가 되었다..?');
       }
       break;
     }
