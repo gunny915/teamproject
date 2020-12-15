@@ -3,7 +3,12 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 
-const {constantManager, mapManager, monsterManager, itemManager, eventManager} = require('./datas/Manager');
+const {constantManager,
+  mapManager,
+  monsterManager,
+  itemManager,
+  eventManager,
+} = require('./datas/Manager');
 const {Player} = require('./models/Player');
 
 const app = express();
