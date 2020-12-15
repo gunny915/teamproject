@@ -11,13 +11,14 @@
     <div id="position"></div>
 
     <div id="status">
-        HP: <span id="HP"> </span></br>
-        STR, DEF: <span id="stat"> </span></br>
-        LEVEL: <span id="level"> </span></br>
-        ITEMS: <span id="items"> </span>
+      HP: <span id="HP"> </span></br>
+      STR, DEF: <span id="stat"> </span></br>
+      LEVEL: <span id="level"> </span></br>
+      ITEMS: <span id="items"> </span>
     </div>
     <div id="game"></div>
     <pre id="event_result"></pre>
+    <img id="image">
     <div id="control">
       <button value="1">동</button>
       <button value="3">서</button>
@@ -38,7 +39,9 @@ const sendAction = (url, params = {}) => {
       }).done((req) => {
         const { player, field, event, actions } = req;
 
+        $('#game').text(field.description);
         $('#position').text(`(${field.x},${field.y})`);
+        
         const x = field.x;
         const y = field.y;
 
@@ -52,13 +55,13 @@ const sendAction = (url, params = {}) => {
             });
           }
         })
-
+ 
         if (event) {
           $('#event_result').text(event.description);
+          $('#image').attr("src", event.name);
         } else {
           $('#event_result').text("아무일도 일어나지 않았다.");
         }
-
         $('#HP').text(`${player.HP} / ${player.maxHP}`)
         $('#stat').text(`${player.str}, ${player.def}`)
         $('#level').text(`${player.level} (${player.exp}/${20 + (player.level -1) * 10})`)

@@ -10,6 +10,7 @@ app.use(express.urlencoded({extended: true}));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
+app.use(express.static('views'));
 
 mongoose.connect(
     'mongodb+srv://gunnydo:gunnydo@cluster0.rhmxe.mongodb.net/Cluster0?retryWrites=true&w=majority',
@@ -63,8 +64,8 @@ app.post('/action', authentication, async (req, res) => {
 
   if (action === 'query') {
     field = getField(req.player.x, req.player.y);
-    const text = eventHandler(6, player);
-    event = {description: text};
+    const [text, name] = eventHandler(6, player);
+    event = {description: text, name: name+'.png'};
   } else if (action === 'move') {
     const direction = parseInt(req.body.direction, 0); // 0 북. 1 동 . 2 남. 3 서.
     let x = req.player.x;
@@ -84,9 +85,10 @@ app.post('/action', authentication, async (req, res) => {
     if (!field) res.sendStatus(400);
     player.x = x;
     player.y = y;
-    const text = eventHandler(field.event, player);
 
-    event = {description: text};
+    const [text, name] = eventHandler(field.event, player);
+
+    event = {description: text, name: name+'.png'};
   }
   const actions = [];
 

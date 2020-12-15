@@ -19,7 +19,7 @@ const getLevelEXP = (level) => {
 const eventHandler = (eventID, player) => {
   const event = eventManager.getEvent(eventID);
   const eventTexts = [event['description']];
-
+  var name = "idle";
   if (event.id === 1) {
     // DEBUG
     const monster = monsterManager.getRandomMonster();
@@ -28,7 +28,7 @@ const eventHandler = (eventID, player) => {
     let monsterHP = monster.hp;
     const playerAttack = Math.max(player.str - monster.def, 0);
     const monsterAttack = Math.max(monster.str - player.def, 0);
-
+    
     while (playerHP > 0 && monsterHP > 0) {
       monsterHP -= playerAttack;
       eventTexts.push(`${player.name}이(가) ${playerAttack}만큼 ${monster.name}을(를) 해결했다.`);
@@ -39,6 +39,7 @@ const eventHandler = (eventID, player) => {
           // TODO: 레벨업 시에, 문구 추가
           eventTexts.push();
         }
+        name = monster.name;
         break;
       }
       playerHP -= monsterAttack;
@@ -46,6 +47,7 @@ const eventHandler = (eventID, player) => {
       if (playerHP <= 0) {
         // 플레이어 사망
         eventTexts.push(`${monster.name}이(가) 프로젝트를 터트렸다.`);
+        name = "death";
         // 아이템 랜덤으로 잃어버리기
         randomItemDrop(player);
         player.x = 0;
@@ -59,6 +61,7 @@ const eventHandler = (eventID, player) => {
     // OBTAIN
     const item = itemManager.getRandomItem();
     const itemName = item.name;
+    name = item.name;
     player.items.push(itemName);
     player.str += item.str;
     player.def += item.def;
@@ -66,10 +69,11 @@ const eventHandler = (eventID, player) => {
   } else if (event.id === 3) {
     // RESTORE
     const heal = getRandomElement([5, 10, 15]);
+    name = "heal";
     eventTexts.push(`휴식시간이 주어져 체력이 ${heal}만큼 회복되었다.`);
     player.HP = Math.min(player.maxHP, player.HP + heal);
   }
-  return eventTexts.join('\n');
+  return [eventTexts.join('\n'), name];
 };
 const randomItemDrop = (player) => {
   // TODO: 랜덤으로 플레이어의 아이템을 잃어버린다.(능력치도 반영 필요)
