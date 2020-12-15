@@ -1,5 +1,4 @@
 /* eslint-disable require-jsdoc */
-const {getRandomElement} = require('../utils.js');
 const fs = require('fs');
 
 class Manager {
@@ -63,6 +62,9 @@ class ItemManager extends Manager {
   getItem(id) {
     return this.items[id-1];
   }
+  getRandomItem() {
+    return getRandomElement(this.items);
+  }
 }
 
 class EventManager extends Manager {
@@ -75,9 +77,9 @@ class EventManager extends Manager {
   }
 
   getEvent(id) {
-    if (id===5) {
+    if (id === 5) {
       // 랜덤 이벤트의 경우 id 1에서 4중 임의의 id를 가져옴
-      return this.events[getRandomElement([1, 2, 3, 4])];
+      return this.events[getRandomElement([0, 1, 2, 3])];
     }
     return this.events[id-1];
   }
@@ -102,12 +104,16 @@ const itemManager = new ItemManager(
 const eventManager = new EventManager(
     JSON.parse(fs.readFileSync(__dirname + '/events.json')),
 );
-
-
+const getRandomElement = (arr) => {
+  const size = arr.length;
+  const randomIndex = Math.floor(Math.random() * size);
+  return arr[randomIndex];
+};
 module.exports = {
   constantManager,
   mapManager,
   monsterManager,
   itemManager,
   eventManager,
+  getRandomElement,
 };
