@@ -51,13 +51,6 @@ app.post('/signup', async (req, res) => {
 
   const player = new Player({
     name,
-    maxHP: 100,
-    HP: 30,
-    str: 10,
-    def: 10,
-    x: 0,
-    y: 0,
-    exp: 100,
   });
 
   const key = crypto.randomBytes(24).toString('hex');

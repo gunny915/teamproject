@@ -5,13 +5,11 @@ const schema = new Schema({
   name: String,
   key: String,
 
-  level: Number,
-  exp: Number,
-
-  maxHP: {type: Number, default: 10},
-  HP: {type: Number, default: 10},
-  str: {type: Number, default: 5},
-  def: {type: Number, default: 5},
+  level: {type: Number, default: 1},
+  maxHP: {type: Number, default: 100},
+  HP: {type: Number, default: 30},
+  str: {type: Number, default: 10},
+  def: {type: Number, default: 10},
   exp: {type: Number, default: 0},
   x: {type: Number, default: 0},
   y: {type: Number, default: 0},
