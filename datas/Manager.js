@@ -1,4 +1,5 @@
 /* eslint-disable require-jsdoc */
+const {getRandomElement} = require('../utils.js');
 const fs = require('fs');
 
 class Manager {
@@ -22,9 +23,8 @@ class MapManager extends Manager {
       this.fields[`${field[0]}_${field[1]}`] = {
         x: field[0],
         y: field[1],
-        description: field[2],
-        canGo: field[3],
-        events: field[4],
+        canGo: field[2],
+        event: field[3],
       };
     });
   }
@@ -39,14 +39,7 @@ class MonsterManager extends Manager {
     super();
     this.monsters = [];
     datas.forEach((monster) => {
-      this.monsters.push({
-        id: monster['id'],
-        name: monster['name'],
-        str: monster['str'],
-        def: monster['def'],
-        hp: monster['hp'],
-        exp: monster['exp'],
-      });
+      this.monsters.push(monster);
     });
   }
 
@@ -60,11 +53,7 @@ class ItemManager extends Manager {
     super();
     this.items = [];
     datas.forEach((item) => {
-      this.items.push({
-        id: item['id'],
-        name: item['name'],
-        def: item['def'],
-      });
+      this.items.push(item);
     });
   }
 
@@ -78,15 +67,16 @@ class EventManager extends Manager {
     super();
     this.events = [];
     datas.forEach((event) => {
-      this.events.push({
-        id: event['id'],
-        description: event['description'],
-      });
+      this.events.push(event);
     });
   }
 
   getEvent(id) {
-    return this.events[id];
+    if (id===5) {
+      // 랜덤 이벤트의 경우 id 1에서 4중 임의의 id를 가져옴
+      return this.events[getRandomElement([1, 2, 3, 4])];
+    }
+    return this.events[id-1];
   }
 }
 

@@ -1,11 +1,34 @@
 [
     {
-        "id": "0",
-        "description": "몬스터와 마주쳐 싸움을 벌였다."
+        "id": 1,
+        "type": "debug",
+        "description": "쓰레기 같은 코드를 만났다."
     },
 
     {
-        "id": "1",
-        "description" : "아이템을 획득해 체력을 회복했다."
+        "id": 2,
+        "type": "obtain",
+        "description" : "디버깅의 조력자가 나타났다."
+    },
+
+    {
+        "id": 3,
+        "type": "restore",
+        "description" : "디버깅할 체력을 회복했다."
+    },
+    {
+        "id": 4,
+        "type": "none",
+        "description" : "쓰레기 같은 코드는 없군..."
+    },
+    {
+        "id": 5,
+        "type": "random",
+        "description" : "오잉? 머선일이고?"
+    },
+    {
+        "id": 6,
+        "type": "start",
+        "description" : "프로젝트가 시작되었다..."
     }
 ]
