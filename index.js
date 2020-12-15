@@ -2,13 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 
-const {constantManager,
-  mapManager,
-  monsterManager,
-  itemManager,
-  eventManager,
-} = require('./datas/Manager');
 const {Player} = require('./models/Player');
+const {getGameName, getField, eventHandler} = require('./utils.js');
 
 const app = express();
 app.use(express.urlencoded({extended: true}));
@@ -34,7 +29,7 @@ const authentication = async (req, res, next) => {
 };
 
 app.get('/', (req, res) => {
-  res.render('index', {gameName: constantManager.gameName});
+  res.render('index', {gameName: getGameName()});
 });
 
 app.get('/game', (req, res) => {
@@ -67,9 +62,9 @@ app.post('/action', authentication, async (req, res) => {
   let field = null;
 
   if (action === 'query') {
-    field = mapManager.getField(req.player.x, req.player.y);
-    const fieldEvent = eventManager.getEvent(field.event);
-    event = {description: fieldEvent.description};
+    field = getField(req.player.x, req.player.y);
+    const text = eventHandler(6, player);
+    event = {description: text};
   } else if (action === 'move') {
     const direction = parseInt(req.body.direction, 0); // 0 북. 1 동 . 2 남. 3 서.
     let x = req.player.x;
@@ -85,15 +80,13 @@ app.post('/action', authentication, async (req, res) => {
     } else {
       res.sendStatus(400);
     }
-    field = mapManager.getField(x, y);
+    field = getField(x, y);
     if (!field) res.sendStatus(400);
     player.x = x;
     player.y = y;
+    const text = eventHandler(field.event, player);
 
-    const fieldEvent = eventManager.getEvent(field.event);
-
-    event = {description: fieldEvent.description};
-    await player.save();
+    event = {description: text};
   }
   const actions = [];
 
@@ -104,8 +97,12 @@ app.post('/action', authentication, async (req, res) => {
       params: {direction: canGo},
     });
   });
-
-  return res.send({player, field, event, actions});
+  await player.save();
+  return res.send({
+    player,
+    field: getField(player.x, player.y),
+    event,
+    actions});
 });
 
 app.listen(3000);
