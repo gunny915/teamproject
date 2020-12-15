@@ -47,7 +47,8 @@ const eventHandler = (eventID, player) => {
         // 플레이어 사망
         eventTexts.push(`${monster.name}이(가) 프로젝트를 터트렸다.`);
         // 아이템 랜덤으로 잃어버리기
-        randomItemDrop(player);
+        const lostItemText = randomItemDrop(player);
+        eventTexts.push(lostItemText);
         player.x = 0;
         player.y = 0;
         playerHP = player.maxHP;
@@ -72,7 +73,18 @@ const eventHandler = (eventID, player) => {
   return eventTexts.join('\n');
 };
 const randomItemDrop = (player) => {
-  // TODO: 랜덤으로 플레이어의 아이템을 잃어버린다.(능력치도 반영 필요)
+  if (player.items.length) {
+    const items = player.items;
+    const itemName = getRandomElement(items);
+    const item = itemManager.getItemByName(itemName);
+    player.str -= item.str;
+    player.def -= item.def;
+    const index = items.indexOf(itemName);
+    items.splice(index, 1);
+    player.items = items;
+    return `${itemName}을(를) 잃어 능력치가 감소했다...`;
+  }
+  return '잃을 아이템도 없다...';
 };
 module.exports = {
   getGameName,
