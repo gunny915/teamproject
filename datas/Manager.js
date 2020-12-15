@@ -65,6 +65,11 @@ class ItemManager extends Manager {
   getRandomItem() {
     return getRandomElement(this.items);
   }
+  getItemByName(name) {
+    return this.items.find((item) => {
+      return item.name === name;
+    });
+  }
 }
 
 class EventManager extends Manager {
