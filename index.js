@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 
@@ -18,7 +17,7 @@ app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
 mongoose.connect(
-    'mongodb+srv://a123456789:ghtjdaleka@cluster0.wgnlx.mongodb.net/mudgame?retryWrites=true&w=majority',
+    'mongodb+srv://gunnydo:gunnydo@cluster0.rhmxe.mongodb.net/Cluster0?retryWrites=true&w=majority',
     {useNewUrlParser: true, useUnifiedTopology: true},
 );
 
@@ -66,9 +65,11 @@ app.post('/action', authentication, async (req, res) => {
   const player = req.player;
   let event = null;
   let field = null;
-  let actions = [];
+
   if (action === 'query') {
     field = mapManager.getField(req.player.x, req.player.y);
+    const fieldEvent = eventManager.getEvent(field.event);
+    event = {description: fieldEvent.description};
   } else if (action === 'move') {
     const direction = parseInt(req.body.direction, 0); // 0 북. 1 동 . 2 남. 3 서.
     let x = req.player.x;
@@ -89,35 +90,19 @@ app.post('/action', authentication, async (req, res) => {
     player.x = x;
     player.y = y;
 
-    const events = field.events;
-    const actions = [];
-    if (events.length > 0) {
-      // TODO : 확률별로 이벤트 발생하도록 변경
-      const _event = events[0];
-      if (_event.type === 'battle') {
-        // TODO: 이벤트 별로 events.json 에서 불러와 이벤트 처리
-        event = eventManager.getEvent(0);
-        monster = monsterManager.getMonster(_event.monster);
-        player.incrementHP(-1);
-      } else if (_event.type === 'item') {
-        event = eventManager.getEvent(1);
-        player.incrementHP(1);
-        item = itemManager.getItem(_event.item);
-        player.HP = Math.min(player.maxHP, player.HP + 1);
-      }
-    }
+    const fieldEvent = eventManager.getEvent(field.event);
 
+    event = {description: fieldEvent.description};
     await player.save();
   }
+  const actions = [];
 
-  field.canGo.forEach((direction, i) => {
-    if (direction === 1) {
-      actions.push({
-        url: '/action',
-        text: i,
-        params: {direction: i, action: 'move'},
-      });
-    }
+  field.canGo.forEach((canGo, i) => {
+    actions.push({
+      url: '/action',
+      text: i,
+      params: {direction: canGo},
+    });
   });
 
   return res.send({player, field, event, actions});

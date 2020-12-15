@@ -4,8 +4,9 @@ const getRandomElement = (arr) => {
   return arr[randomIndex];
 };
 const getLevelEXP = (level) => {
-  return 20 + (Math.max(parseInt(level) - 1,0) * 10);
+  return 20 + (Math.max(parseInt(level) - 1, 0) * 10);
 };
 module.exports = {
   getRandomElement,
+  getLevelEXP,
 };

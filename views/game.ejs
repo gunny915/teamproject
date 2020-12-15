@@ -7,10 +7,14 @@
     </head>
 
   <body>
+    <h1 style="color:coral">Bug Slayer</h1>
     <div id="position"></div>
 
     <div id="status">
-        HP: <span id="HP"> 5 / 5</span>
+        HP: <span id="HP"> </span></br>
+        STR, DEF: <span id="stat"> </span></br>
+        LEVEL: <span id="level"> </span></br>
+        ITEMS: <span id="items"> </span>
     </div>
     <div id="game"></div>
     <div id="event_result"></div>
@@ -34,20 +38,19 @@ const sendAction = (url, params = {}) => {
       }).done((req) => {
         const { player, field, event, actions } = req;
 
-        $('#game').text(field.description);
         $('#position').text(`(${field.x},${field.y})`);
         const x = field.x;
         const y = field.y;
 
-        $('#control').html('');
-        req.actions.forEach((action) => {
-          const dom = $('<button></button');
-          dom.text(action.text);
-          dom.bind('click', function () {
-              sendAction(action.url, action.params);
-          });
-
-          $('#control').append(dom);
+        field.canGo.forEach((canGo, index) => {
+          const dom = $(`button[value="${index}"]`);
+          canGo === 0 ? dom.hide() : dom.show();
+          dom.unbind('click');
+          if (canGo === 1) {
+            dom.bind('click', function () {
+              sendAction("/action", {action: 'move', direction: index});
+            });
+          }
         })
 
         if (event) {
@@ -57,6 +60,9 @@ const sendAction = (url, params = {}) => {
         }
 
         $('#HP').text(`${player.HP} / ${player.maxHP}`)
+        $('#stat').text(`${player.str}, ${player.def}`)
+        $('#level').text(`${player.level} (${player.exp}/${20 + (player.level -1) * 10})`)
+        $('#items').text(`${[]}`)
       });
 
     } 

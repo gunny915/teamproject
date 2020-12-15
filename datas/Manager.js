@@ -46,6 +46,9 @@ class MonsterManager extends Manager {
   getMonster(id) {
     return this.monsters[id-1];
   }
+  getRandomMonster() {
+    return getRandomElement(this.monsters);
+  }
 }
 
 class ItemManager extends Manager {
