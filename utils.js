@@ -64,7 +64,7 @@ const debugMonster = (player) => {
   while (playerHP > 0 && monsterHP > 0) {
     battleCount += 1;
     name = monster.name;
-    if (battleCount === 10) {
+    if (battleCount === 20) {
       eventTexts.push('무의미한 싸움이다...');
       break;
     }
