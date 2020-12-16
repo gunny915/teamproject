@@ -8,7 +8,7 @@
 이 일련의 과정이 머드게임의 뼈대이다. 유저는 프로젝트를 완성하기 위해 경험치를 쌓고 버그를 해결해야 한다. 해당 경험치는 필드 위에 있는 'error'들로부터 넉다운되지 않고 그것들을 물리침으로써 얻을 수 있다. 프로젝트를완성하기 위한 여정을 함께 즐겨주기를 발란다.
 
 # 코드 샌드박스
-* https://codesandbox.io/s/vigorous-kowalevski-82f9v?file=/README.md
+* https://codesandbox.io/s/vigorous-kowalevski-82f9v
 
 # 구성 설명
 
